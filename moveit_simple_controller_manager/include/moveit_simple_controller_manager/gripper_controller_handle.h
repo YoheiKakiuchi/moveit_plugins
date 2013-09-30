@@ -72,15 +72,11 @@ public:
       return false;
     }
 
-    if (trajectory.joint_trajectory.points.empty())
+    if (trajectory.joint_trajectory.points.size() != 2)
     {
-      ROS_ERROR_NAMED("GripperController", "GripperController expects a joint trajectory with one point only, but %u provided)", (unsigned int)trajectory.joint_trajectory.points.size());
-      return false;
-    }
-    if (trajectory.joint_trajectory.points.size() > 1)
-    {
-      ROS_WARN_NAMED("GripperController", "GripperController expects a joint trajectory with one point only, but %u provided)", (unsigned int)trajectory.joint_trajectory.points.size());
+      ROS_ERROR_NAMED("GripperController", "GripperController expects a joint trajectory with two points only, but %u provided)", (unsigned int)trajectory.joint_trajectory.points.size());
       ROS_DEBUG_STREAM_NAMED("GripperController","Trajectory: " << trajectory.joint_trajectory);
+      return false;
     }
 
     if (trajectory.joint_trajectory.joint_names.empty())
